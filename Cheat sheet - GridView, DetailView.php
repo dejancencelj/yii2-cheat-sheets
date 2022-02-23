@@ -57,6 +57,16 @@ GridView
 				// with multiple attributes in the label value:
 				'filter' => Html::activeDropDownList($searchModel, 'lay_customerID', ArrayHelper::map(\app\models\Customer::find()->orderBy('cust_name')->all(), 'customerID', function($model) { return $model->cust_name .' ('. $model->customerID .')'; }), ['prompt' => '', 'class' => 'form-control']),
 			],
+// Custom buttons
+
+			['class' => 'yii\grid\ActionColumn', 'template' => '{view}{update}', 
+			    'buttons' => [
+				'update' => function ($url, $model) {
+				    if(Yii::$app->user->identity->role >= Yii::$app->params['role']['EDITOR']) {
+					return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id'=>$model->id]);
+				    }
+				}
+			    ]],
 
 /*
 ===============================================================================================================
